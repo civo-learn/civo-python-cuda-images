@@ -1,0 +1,50 @@
+# Ignore version control directories
+.git/
+.svn/
+.hg/
+
+# Ignore build and test artifacts
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.pytest_cache
+**/.coverage
+**/coverage.xml
+**/*.cover
+build/
+dist/
+**/*.egg-info/
+**/*.egg
+
+# Ignore logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore environment configurations and virtual environments
+; .env
+; .venv
+; .envrc
+; pip-log.txt
+
+# Ignore IDE-specific files and directories
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node-specific ignores (if using Node.js in your project)
+node_modules/
+npm-debug.log
+
+# System-specific ignores
+.DS_Store
+Thumbs.db
+
+# Ignore Docker-related test and temporary files
+docker-compose.override.yml
+docker-compose.*.yml
+*.tmp
+*.temp
