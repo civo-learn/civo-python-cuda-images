@@ -23,10 +23,10 @@ dist/
 *.sqlite
 
 # Ignore environment configurations and virtual environments
-; .env
-; .venv
-; .envrc
-; pip-log.txt
+# ; .env
+# ; .venv
+# ; .envrc
+# ; pip-log.txt
 
 # Ignore IDE-specific files and directories
 .idea/
