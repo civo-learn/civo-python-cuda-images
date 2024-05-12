@@ -8,14 +8,15 @@ This project provides a Python 3.11 image with CUDA 12.4.1 docker image that is 
 ## Images
 | Name                             | Description                                | Image Size | Nvidia Image Size | Size Reduction |
 |----------------------------------|--------------------------------------------|------------|-------------------|----------------|
-| `civo-python-cuda12`             | Python 3.11, Cuda 12.4, base image         | TBD        | TBD               | TBD            |
-| `civo-python-cuda12-pytorch`     | Base Image with Pytorch 2.3.0              | TBD        | TBD               | TBD            |
-| `civo-python-cuda12-tensorflow`  | Base Image with Tensorflow 2.15.0          | TBD        | TBD               | TBD            |
+| `civo-python-cuda12`             | Python 3.11, Cuda 12.4, base image         | 509MB      | 1.99 GB           | -290%          |
+| `civo-python-cuda12-pytorch`     | Base Image with Pytorch 2.3.0              | 7.93GB     | 8.68 GB           | -9.45%         |
+| `civo-python-cuda12-pytorch-thin`| Base Image with Pytorch 2.3.0              | TBC        | 8.68 GB           | TBC            |
+| `civo-python-cuda12-tensorflow`  | Base Image with Tensorflow 2.15.0          | 2.3GB      | 6.62 GB           | -187.83%       |
 
 
 ## TODO: 
 - make a dagger pipeline...
-- different OSs
-- different python versions
-- different cuda versions
-- different pytorch and tensorflow distros
+- pipeline different OSs
+- pipeline different python versions
+- pipeline different cuda versions
+- pipeline different pytorch and tensorflow distros
