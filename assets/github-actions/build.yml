@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'Dockerfile'
-      - 'env.yaml'  # Ensures the workflow runs if there are changes to env.yaml
-      - 'env-pytorch.yaml'  # Ensures the workflow runs if there are changes to env.yaml
-      - 'env-tensorflow.yaml'  # Ensures the workflow runs if there are changes to env.yaml
-      - 'Dockerfile.pytorch'
-      - 'Dockerfile.pytorch-thin'
-      - 'Dockerfile.tensorflow'
+      - 'assets/Dockerfile'
+      - 'assets/env.yaml'  # Ensures the workflow runs if there are changes to env.yaml
+      - 'assets/env-pytorch.yaml'  # Ensures the workflow runs if there are changes to env.yaml
+      - 'assets/env-tensorflow.yaml'  # Ensures the workflow runs if there are changes to env.yaml
+      - 'assets/Dockerfile.pytorch'
+      - 'assets/Dockerfile.pytorch-thin'
+      - 'assets/Dockerfile.tensorflow'
 
 jobs:
   build-and-deploy:
