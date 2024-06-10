@@ -1,0 +1,30 @@
+name: Run dagger to build and publish cuda images to ghcr.io
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install deps
+        run: pip install dagger-io
+      - name: Install Dagger CLI
+        run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+
+      - name: Convert repository owner to lowercase
+        id: repo_owner
+        run: echo "repo_owner=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Run dagger pipeline
+        run: python dagger/main.py
+        env:
+            registry: ghcr.io
+            username: ${{ env.repo_owner }}
+            password: ${{ secrets.GITHUB_TOKEN }}
