@@ -1,4 +1,4 @@
-name: Run dagger to build and publish cuda images to ghcr.io
+name: Run dagger to build and publish CUDA images to ghcr.io
 on:
   push:
     branches: [main]
@@ -9,14 +9,25 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        os_version: ["jammy", "focal"]
+        cuda_version: ["12.4.1", "11.8.0"]
+        container_type: ["", "pytorch", "tensorflow=2.15.0"]
+        python_version: ["3.9", "3.10", "3.11"]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install deps
         run: pip install dagger-io
+
       - name: Install Dagger CLI
-        run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+        run: |
+          cd /usr/local
+          curl -L https://dl.dagger.io/dagger/install.sh | sh
+          cd -
 
       - name: Convert repository owner to lowercase
         id: repo_owner
@@ -25,6 +36,10 @@ jobs:
       - name: Run dagger pipeline
         run: python dagger/main.py
         env:
-            registry: ghcr.io
-            username: ${{ env.repo_owner }}
-            password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ env.repo_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          OS_VERSION: ${{ matrix.os_version }}
+          CUDA_VERSION: ${{ matrix.cuda_version }}
+          CONTAINER_TYPE: ${{ matrix.container_type }}
+          PYTHON_VERSION: ${{ matrix.python_version }}
