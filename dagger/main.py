@@ -2,6 +2,7 @@ import sys
 import asyncio
 import dagger
 import os
+import json
 
 async def build_and_publish_image(client, os_version, cuda_version, container_type, python_version, username, password):
     # Determine image reference
@@ -22,7 +23,11 @@ async def build_and_publish_image(client, os_version, cuda_version, container_ty
         .with_registry_auth(address="ghcr.io", username=username, secret=secret)
     )
 
-    await container.publish(f"ghcr.io/{username}/{img_ref}")
+    # Publish the container and get the image size
+    image = await container.publish(f"ghcr.io/{username}/{img_ref}")
+    image_size = await container.get_size()
+
+    return img_ref, image_size
 
 async def main():
     username = os.environ.get("username")
@@ -36,9 +41,17 @@ async def main():
         print("Environment variables 'username' and 'password' are required.")
         return
 
+    image_sizes = {}
+
     async with dagger.Connection(dagger.Config(log_output=sys.stderr)) as client:
-        await build_and_publish_image(client, os_version, cuda_version, container_type, python_version, username, password)
+        img_ref, image_size = await build_and_publish_image(client, os_version, cuda_version, container_type, python_version, username, password)
+        image_sizes[img_ref] = image_size
+
+    # Save image sizes to JSON file
+    with open('image_sizes.json', 'w') as json_file:
+        json.dump(image_sizes, json_file, indent=4)
+
+    print("Images built and published successfully!")
 
 if __name__ == "__main__":
     asyncio.run(main())
-    print("Images built and published successfully!")
